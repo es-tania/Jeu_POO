@@ -1,3 +1,17 @@
+body{
+    display: flex;
+    align-items: center;
+}
+
+.prenom{
+    width: max-content;
+    height: max-content;
+    /* border: red solid; */
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    margin-left: 10vw;
+}
+
 .zone{
     cursor: none;
+    margin-left: 20px;
 }
