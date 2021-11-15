@@ -67,7 +67,7 @@ function update_coords() {
         .attr("cy", d => d.y);
 }
 
-// Fonction pour les tire de la fusée
+// Fonction pour les tirs de la fusée
 function missileFusee() {
 
     let varMissile = svg.selectAll("circle.missile").data(tire);
@@ -138,14 +138,14 @@ svg.on("mousemove", function (e) {
     coord_souris(e);
 })
 
-// b) Action des gouttes qui tombent 
+// b) Action des ennemis qui tombent 
 
-// test pour savoir si une goute a terminé sa chute
+// test pour savoir si un ennemi a terminé sa chute
 function chute_en_cours(d) {
     return d.y < 70;
 }
 
-//toutes les 50ms: les goutes tombent un peu
+//toutes les 50ms: les ennemis tombent un peu
 setInterval(function () {
     if (ennemis.length == 0) return;
     ennemis.forEach(function (d) {
@@ -162,7 +162,7 @@ setInterval(function () {
 
 }, 50);
 
-//toutes les 100ms: une nouvelle goutte est ajoutÃ©e en haut
+//toutes les 1100ms: un nouvel ennemi est ajouté en haut
 setInterval(function () {
     compteur++;
     ennemis.push({
@@ -174,7 +174,7 @@ setInterval(function () {
     update_DOM();
 }, 1100);
 
-// c) 
+// c) Action des missiles de la fusée
 
 setInterval(function () {
     if (tire.length == 0) return;
