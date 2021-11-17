@@ -13,6 +13,8 @@ let missile = 0;
 
 let xSouris = 0;
 
+let pause = false;
+
 // II. Dessin
 
 // a) Function pour la fusée
@@ -22,6 +24,15 @@ svg.append("use")
     .attr("id", "fantome")
     .attr("href", "#fusee")
     .style("display", "none")
+    .style("z-index", 2);
+
+// Création de la ligne de délimitation
+mainlayer.append("line")
+    .attr("stroke", "white")
+    .attr("x1", "0")
+    .attr("y1", "75")
+    .attr("x2", "100")
+    .attr("y2", "75")
     .style("z-index", 2);
 
 // b) Function pour les ennemis
@@ -67,7 +78,7 @@ function update_coords() {
         .attr("cy", d => d.y);
 }
 
-// Fonction pour les tirs de la fusée
+// c) Fonction pour les tire de la fusée
 function missileFusee() {
 
     let varMissile = svg.selectAll("circle.missile").data(tire);
@@ -106,6 +117,11 @@ function mouvementTire() {
     if (suppressionDansTableau(ennemis, ennemi => suppressionDansTableau(tire, missile => distance(ennemi, missile) < 2))) {
         missileFusee();
         update_DOM();
+        // Afficher score
+        let points = document.querySelector("span.nbPoints").innerHTML;
+
+        points = parseInt(points);
+        document.querySelector("span.nbPoints").innerHTML = points + 1;
     } else {
         update_coords();
     }
@@ -124,6 +140,13 @@ function coord_souris(e) {
     xSouris = d3.pointer(e)[0];
 }
 
+// function pauseDuJeu(){
+//     document.onkeydown(pause == true);
+// }
+
+//     vieCompteur = parseInt(vieCompteur);
+//     document.querySelector("span.nbVie").innerHTML = vieCompteur - 1;
+
 // III. Moteur
 
 // a) Action de la souris avec la fusée
@@ -138,19 +161,31 @@ svg.on("mousemove", function (e) {
     coord_souris(e);
 })
 
-// b) Action des ennemis qui tombent 
+// b) Action des gouttes qui tombent 
 
-// test pour savoir si un ennemi a terminé sa chute
+// test pour savoir si une goute a terminé sa chute
 function chute_en_cours(d) {
-    return d.y < 70;
+    return d.y < 75;
 }
 
-//toutes les 50ms: les ennemis tombent un peu
+//toutes les 50ms: les goutes tombent un peu
 setInterval(function () {
     if (ennemis.length == 0) return;
     ennemis.forEach(function (d) {
         d.vitesse += 2; //la vitesse augmente (accélération pendant la chute)
         d.y += d.vitesse / 100; //y augmente en fonction de la vitesse 
+
+        if (chute_en_cours(d) == false) {
+            // Un ennemi à traversé, la vie diminue
+            let vieCompteur = document.querySelector("span.nbVie").innerHTML;
+            vieCompteur = parseInt(vieCompteur);
+            document.querySelector("span.nbVie").innerHTML = vieCompteur - 1;
+            if(vieCompteur == 1){
+                alert ("Game Over")
+                location.reload();
+            }
+        }
+
     });
 
     if (ennemis.every(chute_en_cours))
@@ -162,7 +197,22 @@ setInterval(function () {
 
 }, 50);
 
-//toutes les 1100ms: un nouvel ennemi est ajouté en haut
+
+// Afficher GameOver quand il n'y a plus de vie
+// if(vieCompteur == 0){
+//     svg.append("rect")
+//        .attr("x","0")
+//        .attr("y","0")
+//        .style("width","100")
+//        .style("height","100")
+//        .style("background-color","rgba(0,0,0,0.5046218316428134)")
+
+
+
+//     // <rect x="10" y="10" width="30" height="30"/>
+// }
+
+//toutes les 100ms: une nouvelle goutte est ajoutÃ©e en haut
 setInterval(function () {
     compteur++;
     ennemis.push({
@@ -174,7 +224,9 @@ setInterval(function () {
     update_DOM();
 }, 1100);
 
-// c) Action des missiles de la fusée
+// c) 
+
+
 
 setInterval(function () {
     if (tire.length == 0) return;
@@ -185,14 +237,20 @@ setInterval(function () {
 }, 10);
 
 setInterval(function () {
-    missile++;
-    tire.push({
-        x: xSouris,
-        y: 85,
-        vitesse: 200,
-        id: missile
-    });
-    missileFusee();
-}, 250);
+    // pauseDuJeu()
+    // if(pause == false){
+        missile++;
+        tire.push({
+            x: xSouris,
+            y: 85,
+            vitesse: 200,
+            id: missile
+        });
+        missileFusee();
+    }
+    // }
+    
+        
+, 250);
 
 setInterval(mouvementTire, 1);
