@@ -15,6 +15,8 @@ let xSouris = 0;
 
 let pause = false;
 
+let tireE = [];
+
 // II. Dessin
 
 // a) Function pour la fusée
@@ -59,16 +61,22 @@ function update_DOM() {
         .remove();
 
     update_coords();
+}
 
-    // Faire disparaitre les ennemis
+function missileEnnemi() {
 
-    // update.exit() //transition de sortie
-    // .attr("class", "inactif")
-    // .transition()
-    // .duration(500)
-    // .style("fill", "white")
-    // .attr("r", 0)
-    // .remove();
+    let varEnnemi = svg.selectAll("circle.missileE").data(tireE);
+
+    varEnnemi.enter()
+        .append("circle")
+        .attr("class", "missileE")
+        // .attr("id", "tirMissile")
+        .attr("r", 1)
+        .style("fill", "yellow");
+
+    varEnnemi.exit()
+        .remove();
+    update_coords();
 }
 
 // Permet de mettre à jour les coordonnées
@@ -113,9 +121,10 @@ function distance(a, b) {
 
 }
 
+// Points qui augmente quand on touche un ennemi
 function mouvementTire() {
     if (suppressionDansTableau(ennemis, ennemi => suppressionDansTableau(tire, missile => distance(ennemi, missile) < 2))) {
-        missileFusee();
+        missileEnnemi();
         update_DOM();
         // Afficher score
         let points = document.querySelector("span.nbPoints").innerHTML;
@@ -126,6 +135,24 @@ function mouvementTire() {
         update_coords();
     }
 }
+
+// setInterval(mouvementTire, 1);
+
+// Points qui augmente quand on touche un ennemi
+function toucheFusee() {
+    if (suppressionDansTableau(tireE, tireEnnemi => distance(tireEnnemi, {x: xSouris, y: 85}) < 1)) {
+        missileEnnemi();
+        update_DOM();
+        let vieNombre = document.querySelector("span.nbVie").innerHTML;
+        vieNombre = parseInt(vieNombre);
+            document.querySelector("span.nbVie").innerHTML = vieNombre - 1;
+
+    } else {
+        update_coords();
+    }
+}
+
+setInterval(toucheFusee, 1);
 
 // Permet d'avoir les coordonnées de la souris
 function positionFantome(e) {
@@ -168,7 +195,7 @@ function chute_en_cours(d) {
     return d.y < 75;
 }
 
-//toutes les 50ms: les goutes tombent un peu
+//toutes les 50ms: les ennemis tombent un peu
 setInterval(function () {
     if (ennemis.length == 0) return;
     ennemis.forEach(function (d) {
@@ -197,21 +224,6 @@ setInterval(function () {
 
 }, 50);
 
-
-// Afficher GameOver quand il n'y a plus de vie
-// if(vieCompteur == 0){
-//     svg.append("rect")
-//        .attr("x","0")
-//        .attr("y","0")
-//        .style("width","100")
-//        .style("height","100")
-//        .style("background-color","rgba(0,0,0,0.5046218316428134)")
-
-
-
-//     // <rect x="10" y="10" width="30" height="30"/>
-// }
-
 //toutes les 100ms: une nouvelle goutte est ajoutÃ©e en haut
 setInterval(function () {
     compteur++;
@@ -224,9 +236,32 @@ setInterval(function () {
     update_DOM();
 }, 1100);
 
+
+// Missile des ennemis
+let missileE = 0;
+
+setInterval(function () {
+    if (tireE.length == 0) return;
+    tireE.forEach(function (d) {
+        d.vitesse += 2;
+        d.y += d.vitesse / 80;
+    });
+}, 10);
+
+setInterval(function () {
+        let numEnnemi = entierAlea(ennemis.length);
+        missileE++;
+        tireE.push({
+            x: ennemis[numEnnemi].x,
+            y: ennemis[numEnnemi].y,
+            vitesse: 200,
+            id: missileE
+        });
+        missileEnnemi();
+    }
+, 1000);
+
 // c) 
-
-
 
 setInterval(function () {
     if (tire.length == 0) return;
@@ -249,8 +284,5 @@ setInterval(function () {
         missileFusee();
     }
     // }
-    
-        
 , 250);
 
-setInterval(mouvementTire, 1);
