@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
@@ -7,14 +7,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="assets/d3.js"></script>
     <link rel="stylesheet" href="assets/style.css">
-    <title>Document</title>
+    <title>Jeu Shoot</title>
 </head>
 
 <body>
     <h1 class="prenom">ESTEVES Tania, ARRII Victoria</h1>
-    <p>Vous incarnez la fusée et vous avez comme mission d'éliminer tous les ennemis qui se mettront sur votre route durant votre conquête de l'espace !</p>
+    <p>Vous incarnez la fusée et vous avez comme mission d'éliminer tous les ennemis qui se mettront sur votre route durant votre conquête de l'espace !
+        <br>Appuyer sur n'importe qu'elle touche pour mettre en pause.
+    </p>
+    
     <h2>Nombre de vies : <span class="nbVie">5</span></h2>
     <h2>Score : <span class="nbPoints">0</span></h2>
+    <div class="pause">
+        <p>Pause</p>
+    </div>
+    <div class="play">
+        <h3>Jouer !</h3>
+    </div>
     <svg width="90vmin" height="90vmin" viewBox="0 0 100 100" class="zone">
         <!-- Fusée -->
         <defs>
