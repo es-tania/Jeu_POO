@@ -1,0 +1,60 @@
+/* body{
+    display: flex;
+    align-items: center;
+} */
+
+.prenom {
+    width: max-content;
+    height: max-content;
+    /* border: red solid; */
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    /* margin-left: 10vw; */
+}
+
+.zone {
+    cursor: none;
+    /* margin-left: 20px; */
+}
+
+#fusee {
+    z-index: 1;
+}
+
+.play{
+    background-color: rgba(128, 128, 128, 0.507);
+    width: 90vmin;
+    height: 90vmin;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    /* z-index: -1; */
+}
+
+.play h3{
+    background-color: black;
+    color: white;
+    width: max-content;
+    padding: 15px 35px;
+    border-radius: 10px;
+    font-size: 3rem;
+    cursor: pointer;
+    border: black solid;
+}
+
+.pause {
+    background-color: rgba(128, 128, 128, 0.507);
+    width: 90vmin;
+    height: 90vmin;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    z-index: -1;
+}
+
+.pause p {
+    color: white;
+    font-weight: bold;
+    font-size: 4rem;
+}
