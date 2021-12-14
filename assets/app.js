@@ -25,7 +25,7 @@ function updateCoords() {
 }
 
 function updateCoordsEnnemi() {
-    svg.selectAll("#ennemi")
+    svg.selectAll("#mechant")
         .attr("x", d => d.x)
         .attr("y", d => d.y);
 }
@@ -57,16 +57,16 @@ svg.append("g").append("line")
 // Fonction pour les ennemis
 function newEnnemi() {
 
-    let update = svg.selectAll("#ennemi").data(ennemis);
+    let update = svg.selectAll("#mechant").data(ennemis);
 
     update.enter()
         .append("use")
         .attr("class", "actif")
+        .attr("id", "mechant")
         .attr("href", "#ennemi")
-        .style("background-color","red")
+        .style("background-color", "red")
         .transition()
-        .duration(500)
-        .attr("r", 2);
+        .duration(500);
 
     update.exit()
         .remove();
@@ -132,7 +132,7 @@ function distance(a, b) {
 // Points qui augmente quand on touche un ennemi
 function mouvementTire() {
     if (pause == false) {
-        if (suppressionDansTableau(ennemis, ennemi => suppressionDansTableau(tire, missile => distance(ennemi, missile) < 2))) {
+        if (suppressionDansTableau(ennemis, ennemi => suppressionDansTableau(tire, missile => distance(ennemi, missile) < 7))) {
             missileEnnemi();
             newEnnemi();
             // Afficher score
@@ -140,6 +140,11 @@ function mouvementTire() {
 
             points = parseInt(points);
             document.querySelector("span.nbPoints").innerHTML = points + 1;
+            // Stopper le jeu 
+            if (points == 19) {
+                alert("Vous avez gagné !")
+                location.reload();
+            }
         } else {
             updateCoords();
         }
@@ -196,17 +201,17 @@ function chuteEnCours(d) {
     return d.y < 75;
 }
 
-// document.querySelector('.play').addEventListener('click', function () {
-    // document.querySelector('.play').style.zIndex = -1;
-    // document.addEventListener('keydown', function (event) {
-    //     if (pause == false) {
-    //         pause = true;
-    //         document.querySelector('.pause').style.zIndex = 1;
-    //     } else {
-    //         pause = false;
-    //         document.querySelector('.pause').style.zIndex = -1;
-    //     }
-    // });
+document.querySelector('.play').addEventListener('click', function () {
+    document.querySelector('.play').style.zIndex = -1;
+    document.addEventListener('keydown', function (event) {
+        if (pause == false) {
+            pause = true;
+            document.querySelector('.pause').style.zIndex = 2;
+        } else {
+            pause = false;
+            document.querySelector('.pause').style.zIndex = -1;
+        }
+    });
     // a) Action de la souris avec la fusée
 
     if (pause == false) {
@@ -246,7 +251,7 @@ function chuteEnCours(d) {
             });
 
             if (ennemis.every(chuteEnCours))
-                updateCoords();
+                updateCoordsEnnemi();
             else {
                 ennemis = ennemis.filter(chuteEnCours);
                 newEnnemi();
@@ -271,7 +276,7 @@ function chuteEnCours(d) {
         } else {
             return;
         }
-    }, 1100);
+    }, 900);
 
     // Missile des ennemis
     let missileE = 0;
@@ -293,8 +298,8 @@ function chuteEnCours(d) {
         if (pause == false) {
             missileE++;
             tireE.push({
-                x: ennemis[numEnnemi].x,
-                y: ennemis[numEnnemi].y,
+                x: ennemis[numEnnemi].x + 5,
+                y: ennemis[numEnnemi].y + 5,
                 vitesse: 200,
                 id: missileE
             });
@@ -319,7 +324,6 @@ function chuteEnCours(d) {
     }, 10);
 
     setInterval(function () {
-        // pauseDuJeu()
         if (pause == false) {
             missile++;
             tire.push({
@@ -340,4 +344,6 @@ function chuteEnCours(d) {
     // Appel de la fonction de la vie qui diminue quand un missile des ennemis touche la fusée
     setInterval(toucheFusee, 1);
 
-// });
+
+
+});

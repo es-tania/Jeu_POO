@@ -1,45 +1,54 @@
-/* body{
+@font-face {
+    font-family: 'space';
+    src: url('font/bmspa.woff2') format('woff2'),
+         url('font/bmspa.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'play';
+    src: url('font/play.woff') format('woff2'),
+         url('font/play.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+body{
     display: flex;
-    align-items: center;
-} */
+    /* align-items: center; */
+    background-color: #000000;
+}
+
+.presentation{
+    width: 50%;
+    height: 100%;
+    margin: auto;
+    /* border: red solid; */
+}
 
 .prenom {
-    width: max-content;
-    height: max-content;
+    font-family: 'space';
+    text-align: center;
+    /* width: max-content;
+    height: max-content; */
     /* border: red solid; */
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
     /* margin-left: 10vw; */
-}
-
-.zone {
-    cursor: none;
-    /* margin-left: 20px; */
-}
-
-#fusee {
-    z-index: 1;
-}
-
-.play{
-    background-color: rgba(128, 128, 128, 0.507);
-    width: 90vmin;
-    height: 90vmin;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    /* z-index: -1; */
-}
-
-.play h3{
-    background-color: black;
     color: white;
-    width: max-content;
-    padding: 15px 35px;
-    border-radius: 10px;
-    font-size: 3rem;
-    cursor: pointer;
-    border: black solid;
+}
+
+.presentation p{
+    color: white;
+    font-family: 'play';
+    text-align: center;
+}
+
+.presentation p span{
+    color: red ;
+}
+
+.jeu{
+    width: 90vmin;
 }
 
 .pause {
@@ -57,4 +66,67 @@
     color: white;
     font-weight: bold;
     font-size: 4rem;
+    font-family: 'play';
 }
+
+.play{
+    background-color: rgba(128, 128, 128, 0.507);
+    width: 90vmin;
+    height: 90vmin;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    z-index: 2;
+    /* z-index: -1; */
+}
+
+.play h3{
+    background-color: black;
+    color: white;
+    width: max-content;
+    padding: 15px 35px;
+    border-radius: 10px;
+    font-size: 3rem;
+    cursor: pointer;
+    border: black solid;
+    font-family: 'play';
+}
+
+.points{
+    width: 90vmin;
+    height: max-content;
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    z-index: 0;
+}
+
+.points h2{
+    font-family: 'space';
+    font-size: 16px;
+    margin: 0;
+    margin: 10px 20px;
+    color: white;
+}
+
+.zone {
+    cursor: none;
+    border: white solid 1px;
+}
+
+.jeu p{
+    color: white;
+    text-align: center;
+    font-family: 'play';
+    margin: 5px;
+}
+
+#fusee {
+    z-index: 1;
+}
+
+
+
+
+
