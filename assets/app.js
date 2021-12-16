@@ -133,25 +133,32 @@ function distance(a, b) {
 function mouvementTire() {
     if (pause == false) {
         if (suppressionDansTableau(ennemis, ennemi => suppressionDansTableau(tire, missile => distance(ennemi, missile) < 7))) {
-            missileEnnemi();
+            // missileEnnemi();
             newEnnemi();
             // Afficher score
             let points = document.querySelector("span.nbPoints").innerHTML;
 
             points = parseInt(points);
             document.querySelector("span.nbPoints").innerHTML = points + 1;
+            document.querySelector('.score').innerHTML = points;
             // Stopper le jeu 
             if (points == 19) {
-                alert("Vous avez gagné !")
-                location.reload();
+                document.querySelector('.win').style.zIndex = 2;
+                if (pause == false) {
+                    pause = true;
+                };
+
+                document.querySelector('.rejouer').addEventListener('click', function () {
+                    location.reload();
+                });
+            } else {
+                updateCoords();
             }
         } else {
-            updateCoords();
+            return;
         }
-    } else {
-        return;
     }
-}
+};
 
 // Vie diminue quand un missile des ennemis touche la fusée
 function toucheFusee() {
@@ -201,7 +208,7 @@ function chuteEnCours(d) {
     return d.y < 75;
 }
 
-document.querySelector('.play').addEventListener('click', function () {
+document.querySelector('.jouer').addEventListener('click', function () {
     document.querySelector('.play').style.zIndex = -1;
     document.addEventListener('keydown', function (event) {
         if (pause == false) {
@@ -243,8 +250,14 @@ document.querySelector('.play').addEventListener('click', function () {
                     vieCompteur = parseInt(vieCompteur);
                     document.querySelector("span.nbVie").innerHTML = vieCompteur - 1;
                     if (vieCompteur == 1) {
-                        alert("Game Over")
-                        location.reload();
+                        // alert("Game Over")
+                        if (pause == false) {
+                            pause = true;
+                        };
+                        document.querySelector('.perdu').style.zIndex = 3;
+                        document.querySelector('.rejouerperdu').addEventListener('click', function () {
+                            location.reload();
+                        });
                     }
                 }
 
@@ -343,7 +356,5 @@ document.querySelector('.play').addEventListener('click', function () {
 
     // Appel de la fonction de la vie qui diminue quand un missile des ennemis touche la fusée
     setInterval(toucheFusee, 1);
+})
 
-
-
-});

@@ -13,41 +13,58 @@
 <body>
     <div class="presentation">
         <h1 class="prenom">ESTEVES Tania <br>ARRII Victoria</h1>
-        <p>Vous incarnez la fusée et vous avez comme mission d'éliminer tous les ennemis qui se mettront sur votre route durant votre conquête de l'espace !
+        <p>Vous incarnez la fusée et vous avez comme mission d'éliminer tous les ennemis qui se mettront sur votre route
+            durant votre conquête de l'espace !
         </p>
     </div>
-    
-    
+
+
     <div class="jeu">
         <div class="pause">
             <p>Pause</p>
         </div>
         <div class="play">
-            <h3>Jouer !</h3>
+            <h3 class="jouer">Jouer !</h3>
         </div>
         <div class="points">
             <h2>Nombre de vies : <span class="nbVie">5</span></h2>
-        <h2>Score : <span class="nbPoints">0</span></h2>
+            <h2>Score : <span class="nbPoints">0</span></h2>
+        </div>
+        <div class="win">
+            <h3>Bravo !</h3>
+            <h3>Tous les ennemis ont été tués</h3>
+            <p>Score : <span class="score"></span></p>
+            <h4 class="rejouer">Rejouer</h4>
+        </div>
+        <div class="perdu">
+            <h3>Game Over</h3>
+            <h3>Les ennemis vous ont eu !</h3>
+            <p>Score : <span class="score"></span></p>
+            <h4 class="rejouerperdu">Rejouer</h4>
         </div>
         <svg width="90vmin" height="90vmin" viewBox="0 0 100 100" class="zone">
             <!-- Fusée -->
             <defs>
-                <style>.cls-1{fill:white;}</style>
+                <style>
+                    .cls-1 {
+                        fill: white;
+                    }
+                </style>
                 <g data-name="Calque 2" id="fusee" transform="scale(0.2)">
-                    <image xlink:href="assets/image/fusee.png" width=100 x="-9" y="-7"/>
+                    <image xlink:href="assets/image/fusee.png" width=100 x="-9" y="-7" />
                 </g>
-                <g id="ennemi" transform="scale(0.2)" >
-                    <image xlink:href="assets/image/alien_violet.png" width="50px"/>
+                <g id="ennemi" transform="scale(0.2)">
+                    <image xlink:href="assets/image/alien_violet.png" width="50px" />
                 </g>
-        
+
             </defs>
-        
+
         </svg>
         <p>Appuyer sur n'importe qu'elle touche pour mettre en pause.</p>
     </div>
-    
 
-    
+
+
 
 
     <script src="assets/app.js"></script>
