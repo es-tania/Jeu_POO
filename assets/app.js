@@ -140,7 +140,8 @@ function mouvementTire() {
 
             points = parseInt(points);
             document.querySelector("span.nbPoints").innerHTML = points + 1;
-            document.querySelector('.score').innerHTML = points;
+            document.querySelector(".score").innerHTML = points;
+            document.querySelector(".scoreperdu").innerHTML = points;
             // Stopper le jeu 
             if (points == 19) {
                 document.querySelector('.win').style.zIndex = 2;
